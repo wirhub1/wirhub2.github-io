@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скачать Nonerai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('фон/фон.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+
+        .timer {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 30px 0;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 107, 107, 0.7);
+        }
+
+        .version-selector {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .version-option {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            width: 300px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .version-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+        
+        .version-option h3 {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .version-option p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+            min-height: 40px;
+        }
+        
+        .download-screen {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+            transition: width 1s linear;
+            border-radius: 5px;
+        }
+
+        .status {
+            margin: 20px 0;
+            font-size: 1.2rem;
+            color: #aaa;
+        }
+
+        .telegram-link {
+            display: inline-block;
+            background: #0088cc;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .telegram-link:hover {
+            background: #00a2e8;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.4);
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .popup.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .popup-content {
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid #333;
+            position: relative;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .popup img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid #333;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .timer {
+                font-size: 2.5rem;
+            }
+            
+            .version-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .version-option {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+        
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Выберите версию для скачивания</h1>
+        
+        <div class="version-selector">
+            <div class="version-option" data-version="regular">
+                <h3>Обычная версия</h3>
+                <p>Рекомендуется для большинства пользователей</p>
+                <button class="btn download-btn" data-version="regular">Скачать обычную версию</button>
+            </div>
+            
+            <div class="version-option" data-version="nodpi">
+                <h3>NoDPI версия</h3>
+                <p>Для пользователей с нестандартным разрешением экрана</p>
+                <button class="btn download-btn" data-version="nodpi">Скачать NoDPI версию</button>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <a href="index.html" class="btn" style="background: #444; margin-top: 20px;">← Вернуться на главную</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const versionOptions = document.querySelectorAll('.version-option');
+            
+            // Version URLs
+            const versionUrls = {
+                regular: 'https://drive.google.com/file/d/1uM6jhIMQpjbtJiWto3ntyOWNcMyi_aQp/view?usp=sharing',
+                nodpi: 'https://drive.google.com/file/d/1CY_CteqnAA30WX1PkQnzIqMcE6rS-ciN/view?usp=sharing'
+            };
+            
+            // Handle version selection
+            versionOptions.forEach(option => {
+                const btn = option.querySelector('.download-btn');
+                const version = option.dataset.version;
+                
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Redirect to the selected version
+                    window.location.href = versionUrls[version];
+                });
+            });
+        });
+    </script>
+</body>
+</html>
